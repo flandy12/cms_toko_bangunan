@@ -25,9 +25,11 @@
             <div class="bg-white p-6 rounded shadow">
                 <div class="flex justify-between mb-4">
                     <h2 class="text-xl font-semibold">Daftar Role</h2>
+                    @can('role.create')
                     <button @click="openCreate()" class="px-4 py-2 bg-blue-600 text-white rounded">
                         Tambah Role
                     </button>
+                    @endcan
                 </div>
 
                 <table class="min-w-full border">
@@ -36,7 +38,9 @@
                             <th class="px-4 py-2 border">#</th>
                             <th class="px-4 py-2 border">Nama</th>
                             <th class="px-4 py-2 border">Permission</th>
-                            <th class="px-4 py-2 border">Aksi</th>
+                            @can(['role.update', 'role.delete'])
+                                <th class="px-4 py-2 border">Aksi</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -47,19 +51,21 @@
                                 <td class="px-4 py-2 border text-sm">
                                     {{ $role->permissions->pluck('name')->join(', ') }}
                                 </td>
-                                <td class="px-4 py-2 border space-x-2">
-                                    <button @click="openEdit({{ Js::from($role) }})" class="text-green-600">
-                                        Edit
-                                    </button>
-
-                                    <form action="{{ route('roles.destroy', $role->name) }}" method="POST"
-                                        class="inline">
-                                        @csrf @method('DELETE')
-                                        <button onclick="return confirm('Hapus role?')" class="text-red-600">
-                                            Delete
+                                @can(['role.update', 'role.delete'])
+                                    <td class="px-4 py-2 border space-x-2">
+                                        <button @click="openEdit({{ Js::from($role) }})" class="text-green-600">
+                                            Edit
                                         </button>
-                                    </form>
-                                </td>
+
+                                        <form action="{{ route('roles.destroy', $role->name) }}" method="POST"
+                                            class="inline">
+                                            @csrf @method('DELETE')
+                                            <button onclick="return confirm('Hapus role?')" class="text-red-600">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

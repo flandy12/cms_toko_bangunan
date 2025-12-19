@@ -27,9 +27,11 @@
             <div class="bg-white p-6 rounded shadow">
                 <div class="flex justify-between mb-4">
                     <h2 class="text-xl font-semibold">Daftar User</h2>
+                    @can('user.create')
                     <button @click="openCreate()" class="px-4 py-2 bg-blue-600 text-white rounded">
                         Tambah User
-                    </button>
+                </button>
+                    @endcan
                 </div>
 
                 <!-- TABLE -->
@@ -40,7 +42,9 @@
                             <th class="border px-4 py-2">Email</th>
                             <th class="border px-4 py-2">Role</th>
                             <th class="border px-4 py-2">Status</th>
-                            <th class="border px-4 py-2">Aksi</th>
+                            @can(['user.update', 'user.delete'])
+                                <th class="border px-4 py-2">Aksi</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -58,18 +62,21 @@
                                         {{ $user->status ? 'Aktif' : 'Nonaktif' }}
                                     </span>
                                 </td>
-                                <td class="border px-4 py-2 space-x-2 text-center">
-                                    <button @click="openEdit({{ Js::from($user) }})" class="text-green-600">
-                                        Edit
-                                    </button>
-
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
-                                        @csrf @method('DELETE')
-                                        <button onclick="return confirm('Hapus user?')" class="text-red-600">
-                                            Delete
+                                @can(['user.update', 'user.delete'])
+                                    <td class="border px-4 py-2 space-x-2 text-center">
+                                        <button @click="openEdit({{ Js::from($user) }})" class="text-green-600">
+                                            Edit
                                         </button>
-                                    </form>
-                                </td>
+
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf @method('DELETE')
+                                            <button onclick="return confirm('Hapus user?')" class="text-red-600">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

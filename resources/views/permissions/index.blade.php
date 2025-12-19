@@ -24,9 +24,11 @@
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-semibold">Daftar Permission</h2>
 
+                    @can('permission.create')
                     <button @click="openCreate()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                         Tambah Permission
                     </button>
+                    @endcan
                 </div>
 
                 <!-- TABLE -->
@@ -36,7 +38,9 @@
                             <tr>
                                 <th class="px-4 py-2 border">#</th>
                                 <th class="px-4 py-2 border">Nama</th>
-                                <th class="px-4 py-2 border text-center">Aksi</th>
+                                @can(['permission.update', 'permission.delete'])
+                                    <th class="px-4 py-2 border text-center">Aksi</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -44,25 +48,25 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-4 py-2 border">{{ $loop->iteration }}</td>
                                     <td class="px-4 py-2 border">{{ $permission->name }}</td>
+                                    @can(['permission.update', 'permission.delete'])
+                                        <td class="px-4 py-2 border text-center space-x-3">
 
-                                    <td class="px-4 py-2 border text-center space-x-3">
-
-                                        <!-- EDIT -->
-                                        <button @click="openEdit({{ Js::from($permission) }})" class="text-green-600">
-                                            Edit
-                                        </button>
-
-                                        <!-- DELETE -->
-                                        <form action="{{ route('permissions.destroy', $permission->name) }}"
-                                            method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('Yakin hapus?')" class="text-red-600">
-                                                Delete
+                                            <!-- EDIT -->
+                                            <button @click="openEdit({{ Js::from($permission) }})" class="text-green-600">
+                                                Edit
                                             </button>
-                                        </form>
 
-                                    </td>
+                                            <!-- DELETE -->
+                                            <form action="{{ route('permissions.destroy', $permission->name) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Yakin hapus?')" class="text-red-600">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>

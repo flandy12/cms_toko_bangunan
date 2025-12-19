@@ -33,7 +33,7 @@
                 category: product.category,
                 type: product.type,
                 price: product.price,
-                image: product.image // hanya untuk preview
+                image: product.image,
             }
             this.open = true
         }
@@ -47,10 +47,11 @@
                 <!-- HEADER -->
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-semibold">Daftar Produk</h2>
-
-                    <button @click="openCreate()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                        Tambah Produk
-                    </button>
+                    @can('product.create')
+                        <button @click="openCreate()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                            Tambah Produk
+                        </button>
+                    @endcan
                 </div>
 
                 <!-- TABLE -->
@@ -65,7 +66,9 @@
                                 <th class="px-4 py-2 border">Kategori</th>
                                 <th class="px-4 py-2 border">Tipe</th>
                                 <th class="px-4 py-2 border">Harga</th>
-                                <th class="px-4 py-2 border text-center">Aksi</th>
+                                @can(['product.update', 'product.delete'])
+                                    <th class="px-4 py-2 border text-center">Aksi</th>
+                                @endcan
                             </tr>
                         </thead>
 
@@ -84,22 +87,23 @@
                                     <td class="px-4 py-2 border">
                                         Rp{{ number_format($product->price) }}
                                     </td>
-
-                                    <td class="px-4 py-2 border text-center space-x-3">
-                                        <button @click="openEdit({{ Js::from($product) }})" class="text-green-600">
-                                            Edit
-                                        </button>
-
-                                        <form action="{{ route('product.destroy', $product->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('Yakin hapus produk?')"
-                                                class="text-red-600">
-                                                Delete
+                                    @can(['product.update', 'product.delete'])
+                                        <td class="px-4 py-2 border text-center space-x-3">
+                                            <button @click="openEdit({{ Js::from($product) }})" class="text-green-600">
+                                                Edit
                                             </button>
-                                        </form>
-                                    </td>
+
+                                            <form action="{{ route('product.destroy', $product->id) }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Yakin hapus produk?')"
+                                                    class="text-red-600">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>
@@ -127,7 +131,9 @@
                         ?
                         `/product/${form.id}` :
                         `{{ route('product.store') }}`"
-                    method="POST" class="space-y-4">
+                    enctype="multipart/form-data" method="POST" class="space-y-4">
+                    
+    
                     @csrf
 
                     <template x-if="isEdit">

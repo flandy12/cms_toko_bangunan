@@ -23,14 +23,14 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Admin User',
-                'email' => 'admin_user@gmail.com',
+                'name' => 'Owner',
+                'email' => 'owner@gmail.com',
                 'password' => Hash::make('password123'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Owner',
+                'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password123'),
                 'created_at' => now(),
