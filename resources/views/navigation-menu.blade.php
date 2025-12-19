@@ -16,21 +16,31 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('user.view')
                     <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                         User
                     </x-nav-link>
+                    @endcan
+                    @can('role.view')
                      <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         Role
                     </x-nav-link>
+                    @endcan
+                    @can('permission.view')
                      <x-nav-link href="{{ route('permissions.index') }}" :active="request()->routeIs('permissions.index')">
                         Permission
                     </x-nav-link>
+                    @endcan
+                    @can('product.view')
                     <x-nav-link href="{{ route('product.index') }}" :active="request()->routeIs('product.index')">
                         Produk
                     </x-nav-link>
+                    @endcan
+                    @can('report.view')
                     <x-nav-link href="{{ route('report') }}" :active="request()->routeIs('report')">
                         Report Penjualan
                     </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
