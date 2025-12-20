@@ -16,8 +16,8 @@ class RoleSeeder extends Seeder
         $guard = 'web'; // ganti ke sanctum jika perlu
 
         // ROLES
-        $admin = Role::firstOrCreate(['name' => 'Admin', 'guard_name' => $guard]);
-        $kepalaToko = Role::firstOrCreate(['name' => 'Kepala Toko', 'guard_name' => $guard]);
-        $staff = Role::firstOrCreate(['name' => 'Staff', 'guard_name' => $guard]);
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => $guard]);
+        $kepalaToko = Role::firstOrCreate(['name' => 'owner', 'guard_name' => $guard]);
+        $staff = Role::firstOrCreate(['name' => 'staff', 'guard_name' => $guard]);
     }
 }

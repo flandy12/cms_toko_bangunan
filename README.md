@@ -17,7 +17,6 @@ dikembangkan.
 -   Node.js & NPM
 -   Tailwind CSS
 -   Alpine.js
--   Docker (Opsional)
 
 ------------------------------------------------------------------------
 
@@ -112,6 +111,7 @@ npm run dev
 ## ▶️ Menjalankan Aplikasi
 
 ``` bash
+php artisan storage:link
 php artisan serve
 ```
 
@@ -119,14 +119,65 @@ Akses:
 
     http://127.0.0.1:8000
 
+
 ------------------------------------------------------------------------
 
-## 🐳 Docker (Opsional)
+
+## ▶️ Akun Login
 
 ``` bash
-docker compose up -d --build
-docker compose exec app bash
-php artisan migrate
+#Admin
+Email : admin@gmail.com
+Password : password123
+
+#Staff
+Email : staff@gmail.com
+Password : password123
+
+#Owner
+Email : owner@gmail.com
+Password : password123
+```
+
+------------------------------------------------------------------------
+
+## Hak Akses Setiap Jenis Akun
+
+``` bash
+### Admin
+
+Akun Admin memiliki akses penuh untuk mengelola sistem. Admin dapat melihat, menambah, mengubah, dan menghapus data produk, pengguna, peran (role), serta izin (permission).
+
+Ruang lingkup akses Admin:
+
+* Mengelola data produk (lihat)
+* Mengelola data pengguna (lihat, tambah, ubah, hapus)
+* Mengelola role (lihat, tambah, ubah, hapus)
+* Mengelola permission (lihat, tambah, ubah, hapus)
+
+### Staff
+
+Akun Staff memiliki akses terbatas untuk operasional harian. Staff dapat melihat data produk dan pengguna, melakukan perubahan pada produk tertentu, serta mengakses laporan tanpa dapat mengelola pengguna atau sistem secara penuh.
+
+Ruang lingkup akses Staff:
+
+* Melihat dan memperbarui data produk
+* Menghapus data produk tertentu
+* Melihat data pengguna
+* Melihat data role dan permission
+* Melihat laporan
+* Mengunduh laporan
+
+### Owner
+
+Akun Owner difokuskan pada pengawasan dan pengambilan keputusan. Owner dapat mengelola produk dan mengakses laporan, namun tidak dapat mengelola pengguna, role, maupun permission.
+
+Ruang lingkup akses Owner:
+
+* Mengelola data produk (lihat, tambah, ubah, hapus)
+* Melihat laporan
+* Mengunduh laporan
+
 ```
 
 ------------------------------------------------------------------------
@@ -147,57 +198,3 @@ php artisan migrate
      ├── views/
      ├── js/
      ├── css/
-
-------------------------------------------------------------------------
-
-## 🧪 Testing
-
-``` bash
-php artisan test
-```
-
-------------------------------------------------------------------------
-
-## 🚀 Production
-
-``` bash
-composer install --no-dev
-php artisan migrate --force
-php artisan optimize
-php artisan storage:link
-```
-
-------------------------------------------------------------------------
-
-## 🛠 Artisan Command
-
-``` bash
-php artisan optimize
-php artisan route:list
-php artisan cache:clear
-php artisan config:clear
-php artisan view:clear
-```
-
-------------------------------------------------------------------------
-
-## 📝 Catatan
-
-``` bash
-chmod -R 775 storage bootstrap/cache
-```
-
--   Jangan commit file `.env`
--   Gunakan `.env.production` untuk server
-
-------------------------------------------------------------------------
-
-## 👨‍💻 Developer
-
--   Dev Flandy
-
-------------------------------------------------------------------------
-
-## 📄 Lisensi
-
-MIT License
